@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"net/url"
 	"os"
 	"path"
@@ -112,6 +113,10 @@ func MockUpdate(ctx context.Context, target string) error {
 		return err
 	}
 
+	if err := env.Parse(params); err != nil {
+		return err
+	}
+	environment.NoPush = true
 	handlers := updateaction.NewHandlers(params)
 	return handlers.Handle(ctx, &environment.Environment)
 }
@@ -136,6 +141,11 @@ const workflowDir = ".github/workflows"
 func loadConfiguration(ctx context.Context, gh *github.Client, parsed *parsedTarget, environment interface{}) error {
 	_, directoryContent, _, err := gh.Repositories.GetContents(ctx, parsed.owner, parsed.repo, workflowDir, &github.RepositoryContentGetOptions{})
 	if err != nil {
+		if githubErr, ok := err.(*github.ErrorResponse); ok {
+			if githubErr.Response.StatusCode == http.StatusNotFound {
+				return nil
+			}
+		}
 		return err
 	}
 
@@ -196,7 +206,7 @@ func loadConfiguration(ctx context.Context, gh *github.Client, parsed *parsedTar
 					}).Debug("setting value from workflow input")
 					_ = os.Setenv(key, value)
 				}
-				return env.Parse(environment)
+				return nil
 			}
 		}
 	}
@@ -271,8 +281,12 @@ func (p *parsedTarget) clonePullRequest(ctx context.Context, gh *github.Client, 
 	if err != nil {
 		return false, fmt.Errorf("creating temp event file: %w", err)
 	}
-	_ = os.Setenv("GITHUB_EVENT_NAME", "pull_request")
-	_ = os.Setenv("GITHUB_EVENT_PATH", tmpEvt)
+	if err := os.Setenv("GITHUB_EVENT_NAME", "pull_request"); err != nil {
+		return false, err
+	}
+	if err := os.Setenv("GITHUB_EVENT_PATH", tmpEvt); err != nil {
+		return false, err
+	}
 	return true, nil
 }
 
@@ -288,7 +302,9 @@ func (p *parsedTarget) cloneEvent(ctx context.Context, dir string) (bool, error)
 		return false, fmt.Errorf("git fetch: %w", err)
 	}
 
-	_ = os.Setenv("GITHUB_EVENT_NAME", "schedule")
+	if err := os.Setenv("GITHUB_EVENT_NAME", "schedule"); err != nil {
+		return false, err
+	}
 	return true, nil
 }
 
