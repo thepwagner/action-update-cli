@@ -8,8 +8,8 @@ require (
 	github.com/sirupsen/logrus v1.7.0
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/viper v1.7.1
-	github.com/thepwagner/action-update v0.0.5
-	github.com/thepwagner/action-update-docker v0.0.2
+	github.com/thepwagner/action-update v0.0.10
+	github.com/thepwagner/action-update-docker v0.0.5
 	github.com/thepwagner/action-update-dockerurl v0.0.1
 	github.com/thepwagner/action-update-go v0.0.1
 )
