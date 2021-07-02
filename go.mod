@@ -1,15 +1,15 @@
 module github.com/thepwagner/action-update-cli
 
 require (
-	github.com/caarlos0/env/v6 v6.3.0
+	github.com/caarlos0/env/v6 v6.6.2
 	github.com/ghodss/yaml v1.0.0
 	github.com/google/go-github/v32 v32.1.0
 	github.com/mitchellh/go-homedir v1.1.0
-	github.com/sirupsen/logrus v1.7.0
+	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.0.0
-	github.com/spf13/viper v1.7.1
-	github.com/thepwagner/action-update v0.0.10
-	github.com/thepwagner/action-update-docker v0.0.5
+	github.com/spf13/viper v1.8.1
+	github.com/thepwagner/action-update v0.0.41
+	github.com/thepwagner/action-update-docker v0.0.8
 	github.com/thepwagner/action-update-dockerurl v0.0.1
 	github.com/thepwagner/action-update-go v0.0.1
 )
