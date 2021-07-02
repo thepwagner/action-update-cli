@@ -3,7 +3,7 @@ module github.com/thepwagner/action-update-cli
 require (
 	github.com/caarlos0/env/v6 v6.6.2
 	github.com/ghodss/yaml v1.0.0
-	github.com/google/go-github/v32 v32.1.0
+	github.com/google/go-github/v36 v36.0.0
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.0.0

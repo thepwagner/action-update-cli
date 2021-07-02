@@ -14,7 +14,7 @@ import (
 
 	"github.com/caarlos0/env/v6"
 	"github.com/ghodss/yaml"
-	"github.com/google/go-github/v32/github"
+	"github.com/google/go-github/v36/github"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
